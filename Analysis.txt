@@ -1,0 +1,30 @@
+# ==============================================================================
+# 
+# Purpose: Perform the statistical test and interpret the hypothesis test results.
+# ==============================================================================
+
+# 1. LOAD DATA
+# ------------------------------------------------------------------------------
+# Load the dataset (Ensure 'Shopping_CustomerData.csv' is in your working directory)
+shopping_data <- read.csv("Shopping_CustomerData.csv")
+
+# 2. STATISTICAL ANALYSIS
+# ------------------------------------------------------------------------------
+# RQ: Is there a significant difference in mean Annual Income between Male and Female customers?
+# Perform an Independent Samples T-test (Welch's t-test)
+t_test_result <- t.test(AnnualIncome ~ CustomerGender, data = shopping_data, var.equal = FALSE)
+
+# 3. OUTPUT RESULTS AND CONCLUSION
+# ------------------------------------------------------------------------------
+print("--- T-Test Results ---")
+print(t_test_result)
+
+# Extract P-value and provide interpretation
+p_value <- t_test_result$p.value
+cat("\nP-value:", format(p_value, scientific = FALSE), "\n")
+
+if(p_value < 0.05) {
+  cat("Conclusion: Reject the Null Hypothesis (Significant difference found).\n")
+} else {
+  cat("Conclusion: Do not reject the Null Hypothesis (No significant difference).\n")
+}
