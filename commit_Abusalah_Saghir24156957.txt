@@ -1,0 +1,64 @@
+Commit 1: Uploaded Dataset: Shopping_CustomerData.csv
+
+Commit Message: Uploaded Shopping_CustomerData.csv dataset
+
+
+Commit 2 : 
+Detailed breakdown of the actual work in Analysis.R
+	1.	Defined the purpose of the script
+
+# Purpose: Perform the statistical test and interpret the hypothesis test results.
+
+Abu-Salah added a clear header so anyone opening the file knows this script is responsible for the hypothesis testing part of the project.
+
+
+2.	Loaded the dataset from CSV
+shopping_data <- read.csv("Shopping_CustomerData.csv")
+	•	Reads the file Shopping_CustomerData.csv into R.
+	•	Stores it in a data frame called shopping_data.
+	•	This makes all variables (Gender, AnnualIncome, etc.) available for further analysis.
+
+
+	3.	Ran the Welch Two-Sample t-test for the Research Question
+t_test_result <- t.test(AnnualIncome ~ CustomerGender,
+                        data = shopping_data,
+                        var.equal = FALSE)
+
+	•	Uses the formula AnnualIncome ~ CustomerGender to compare mean income between Male and Female customers.
+	•	var.equal = FALSE specifies Welch’s t-test, which does not assume equal variances (more robust and appropriate here).
+	•	The full output (t-statistic, degrees of freedom, p-value, confidence interval, group means) is stored in t_test_result.
+
+
+
+	4.	Printed the test results in a readable way
+
+print("--- T-Test Results ---")
+print(t_test_result)
+
+	•	Prints a header line and then the full t-test object.
+	•	This gives all numeric details used later in the written report.
+
+
+
+	5.	Extracted the p-value and formatted it
+p_value <- t_test_result$p.value
+cat("\nP-value:", format(p_value, scientific = FALSE), "\n")
+
+	•	Pulls out the p-value from the test result.
+	•	Prints it in non-scientific notation so it is easy to read and report.
+
+
+	6.	Automatic hypothesis conclusion (Reject / Do not reject H₀)
+if (p_value < 0.05) {
+  cat("Conclusion: Reject the Null Hypothesis (Significant difference found).\n")
+} else {
+  cat("Conclusion: Do not reject the Null Hypothesis (No significant difference).\n")
+}
+
+	•	Compares the p-value with the standard α = 0.05 threshold.
+	•	If p < 0.05 → prints “Reject the Null Hypothesis”.
+	•	If p ≥ 0.05 → prints “Do not reject the Null Hypothesis”.
+	•	This is exactly the logic used in the written report conclusion.
+
+Overview : 
+Created Analysis.R, which loads the dataset, runs Welch’s t-test on Annual Income by gender, extracts the p-value, and prints an automatic hypothesis test conclusion.
